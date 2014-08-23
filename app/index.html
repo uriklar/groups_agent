@@ -9,11 +9,26 @@
 <body ng-controller="mainCtrl">
   <div ng-controller="authCtrl" >
       <button type="button" data-ng-show="!logged" data-ng-disabled="!facebookReady" data-ng-click="IntentLogin()">Login with Facebook</button>
-          <button type="button" data-ng-show="logged" data-ng-disabled="!facebookReady" data-ng-click="logout()">Logout</button>
-
-
-     {{groups}}
+      <button type="button" data-ng-show="logged" data-ng-disabled="!facebookReady" data-ng-click="logout()">Logout</button>
   </div>
+
+      <ul ng-repeat="group in groups">
+        <li>
+          <label class="checkbox" for="{{group.id}}">
+            <input type="checkbox" name="group" id="{{group.id}}" ng-model="value"  ng-change="getGroupFeed(group.id)" />
+            {{group.name}}
+         </label>
+       </li>
+    </ul>
+
+    <p>
+      <input ng-model="query" />
+    </p>
+
+
+    <ul ng-repeat="post in feed | filter:query track by $index">
+      <li>{{post.message}}</li>
+    </ul>
 
   <script src="bower_components/angular/angular.js"></script>
   <script src="js/app.js"></script>
